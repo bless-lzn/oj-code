@@ -1,7 +1,6 @@
 <template>
   <div id="globalHeader">
-
-    <a-row class="grid-demo" style="margin-bottom: 16px; " :wrap=false>
+    <a-row  style="margin-bottom: 16px; " :wrap=false align="center">
       <a-col flex="160px">
         <div class="title-bar">
           <img src="../assets/logo.png" alt="#" style="width:32px">
@@ -19,7 +18,7 @@
         </div>
       </a-col>
       <a-col flex="100px">
-        <div>100px</div>
+        <div>李某</div>
       </a-col>
     </a-row>
 
@@ -28,12 +27,10 @@
 </template>
 <style scoped>
 #globalHeader .title-bar {
-  margin-top: 10px;
   margin-left: 8px;
   display: flex;
   align-items: center
 }
-
 #globalHeader .title{
   color: black;
   font-size: 18px;
