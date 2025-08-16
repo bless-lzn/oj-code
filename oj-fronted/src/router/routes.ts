@@ -1,6 +1,7 @@
 import HomeView from '@/views/HomeView.vue'
 import AdminView from '@/views/AdminView.vue'
 import NoAuth from '@/views/NoAuth.vue'
+import ACCESS_ENUM from '@/access/accessEnum.ts'
 
 export  const routes= [
   {
@@ -12,6 +13,9 @@ export  const routes= [
     path: '/noAuth',
     name: 'auth',
     component: NoAuth,
+    meta: {
+      hideInMenu: true,
+    }
 
   },
   {
@@ -19,7 +23,7 @@ export  const routes= [
     name: 'admin',
     component: AdminView,
     meta: {
-      access: 'canAdmin',
+      access: ACCESS_ENUM.ADMIN,
     }
   },
   {
