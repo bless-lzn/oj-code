@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useCounterStore = defineStore('loginUser', () => {
+export const UserLoginUserStore = defineStore('loginUser', () => {
   const loginUser = ref({
     userName: '未登录',
+    role:'NOTLogin'
   })
   /**
    * 远程获取登录用户信息
@@ -15,7 +16,7 @@ export const useCounterStore = defineStore('loginUser', () => {
     // }
     // // 测试用户登录，3 秒后自动登录
     setTimeout(() => {
-      loginUser.value = { userName: '测试用户' }
+      loginUser.value = { userName: '测试用户', role: 'user' }
     }, 3000)
   }
 

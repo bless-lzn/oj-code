@@ -18,7 +18,9 @@
         </div>
       </a-col>
       <a-col flex="100px">
-        <div>李某</div>
+        <div>
+          {{store.loginUser.userName??"未登录"}}
+        </div>
       </a-col>
     </a-row>
 
@@ -41,6 +43,8 @@
 import { routes } from '@/router/routes.ts'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useCounterStore } from '@/stores/counter.ts'
+import { UserLoginUserStore } from '@/stores/userLoginUserStore.ts'
 //进行路由跳转
 const doMenuClick = (key:string) => {
   router.push({
@@ -54,5 +58,10 @@ const current = ref<string[]>([])
 router.afterEach((to)=>{
   current.value=[to.path]
 })
+//获取全局状态管理
+const store = UserLoginUserStore()
+
+store.fetchLoginUser()
+
 
 </script>
