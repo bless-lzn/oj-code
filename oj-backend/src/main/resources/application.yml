@@ -1,6 +1,4 @@
-# 公共配置文件
-# @author <a href="https://github.com/liyupi">程序员鱼皮</a>
-# @from <a href="https://yupi.icu">编程导航知识星球</a>
+
 spring:
   application:
     name: springboot-init
@@ -21,9 +19,9 @@ spring:
   # todo 需替换配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_db
+    url: jdbc:mysql://localhost:3306/codeoj
     username: root
-    password: 123456
+    password: LZNlzn123.
   # Redis 配置
   # todo 需替换配置，然后取消注释
 #  redis:
@@ -45,7 +43,7 @@ spring:
       max-file-size: 10MB
 server:
   address: 0.0.0.0
-  port: 8101
+  port: 8121
   servlet:
     context-path: /api
     # cookie 30 天过期
@@ -63,8 +61,8 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 # 微信相关
 wx:
-  # 微信公众平台
-  # todo 需替换配置
+#  # 微信公众平台
+#  # todo 需替换配置
   mp:
     token: xxx
     aesKey: xxx
@@ -100,4 +98,4 @@ knife4j:
       default:
         api-rule: package
         api-rule-resources:
-          - com.yupi.springbootinit.controller
+          - com.ojcode.springbootinit.controller
