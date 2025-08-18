@@ -14,6 +14,10 @@ import com.ojcode.springbootinit.model.entity.User;
 import com.ojcode.springbootinit.service.PostFavourService;
 import com.ojcode.springbootinit.service.PostService;
 import javax.annotation.Resource;
+
+import com.ojcode.springbootinit.service.QuestionSubmitService;
+import com.ojcode.springbootinit.model.entity.QuestionSubmit;
+import com.ojcode.springbootinit.mapper.QuestionSubmitMapper;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,6 +112,12 @@ public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFav
             }
         }
     }
+
+    /**
+    * @author henan
+    * @description 针对表【question_submit(题目提交)】的数据库操作Service实现
+    * @createDate 2025-08-18 19:11:56
+    */
 
 }
 
