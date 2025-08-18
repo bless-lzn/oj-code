@@ -2,7 +2,7 @@
 import ACCESS_ENUM from '@/access/accessEnum.ts'
 import { UserLoginUserStore } from '@/stores/userLoginUserStore.ts'
 
-
+//显示
 const checkAccess = (loginUser: any, needAccess = ACCESS_ENUM.NOT_LOGIN) => {
   //如果无权限
   // console.log(`为负值之前方法内部${loginUser.userRole},需要的${needAccess}`)

@@ -4,7 +4,7 @@ import { Message } from '@arco-design/web-vue'
 
 // 创建 Axios 实例
 const myAxios = axios.create({
-  baseURL: 'http://localhost:8123',
+  baseURL: 'http://localhost:8121',
   timeout: 60000,
   withCredentials: true,
 })
