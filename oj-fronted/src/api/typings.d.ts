@@ -35,6 +35,24 @@ declare namespace API {
     message?: string
   }
 
+  type BaseResponsePageQuestion_ = {
+    code?: number
+    data?: PageQuestion_
+    message?: string
+  }
+
+  type BaseResponsePageQuestionSubmitVO_ = {
+    code?: number
+    data?: PageQuestionSubmitVO_
+    message?: string
+  }
+
+  type BaseResponsePageQuestionVO_ = {
+    code?: number
+    data?: PageQuestionVO_
+    message?: string
+  }
+
   type BaseResponsePageUser_ = {
     code?: number
     data?: PageUser_
@@ -50,6 +68,12 @@ declare namespace API {
   type BaseResponsePostVO_ = {
     code?: number
     data?: PostVO
+    message?: string
+  }
+
+  type BaseResponseQuestionVO_ = {
+    code?: number
+    data?: QuestionVO
     message?: string
   }
 
@@ -91,6 +115,11 @@ declare namespace API {
     id?: number
   }
 
+  type getQuestionVOByIdUsingGETParams = {
+    /** id */
+    id?: number
+  }
+
   type getUserByIdUsingGETParams = {
     /** id */
     id?: number
@@ -99,6 +128,23 @@ declare namespace API {
   type getUserVOByIdUsingGETParams = {
     /** id */
     id?: number
+  }
+
+  type JudgeCase = {
+    input?: string
+    output?: string
+  }
+
+  type JudgeConfig = {
+    memoryLimit?: number
+    stackLimit?: number
+    timeLimit?: number
+  }
+
+  type JudgeInfo = {
+    memory?: number
+    message?: string
+    time?: number
   }
 
   type LoginUserVO = {
@@ -137,6 +183,45 @@ declare namespace API {
     orders?: OrderItem[]
     pages?: number
     records?: PostVO[]
+    searchCount?: boolean
+    size?: number
+    total?: number
+  }
+
+  type PageQuestion_ = {
+    countId?: string
+    current?: number
+    maxLimit?: number
+    optimizeCountSql?: boolean
+    orders?: OrderItem[]
+    pages?: number
+    records?: Question[]
+    searchCount?: boolean
+    size?: number
+    total?: number
+  }
+
+  type PageQuestionSubmitVO_ = {
+    countId?: string
+    current?: number
+    maxLimit?: number
+    optimizeCountSql?: boolean
+    orders?: OrderItem[]
+    pages?: number
+    records?: QuestionSubmitVO[]
+    searchCount?: boolean
+    size?: number
+    total?: number
+  }
+
+  type PageQuestionVO_ = {
+    countId?: string
+    current?: number
+    maxLimit?: number
+    optimizeCountSql?: boolean
+    orders?: OrderItem[]
+    pages?: number
+    records?: QuestionVO[]
     searchCount?: boolean
     size?: number
     total?: number
@@ -247,6 +332,118 @@ declare namespace API {
     updateTime?: string
     user?: UserVO
     userId?: number
+  }
+
+  type Question = {
+    acceptedNum?: number
+    answer?: string
+    content?: string
+    createTime?: string
+    favourNum?: number
+    id?: number
+    isDelete?: number
+    judgeCase?: string
+    judgeConfig?: string
+    submitNum?: number
+    tags?: string
+    thumbNum?: number
+    title?: string
+    updateTime?: string
+    userId?: number
+  }
+
+  type QuestionAddRequest = {
+    answer?: string
+    content?: string
+    judgeCase?: JudgeCase[]
+    judgeConfig?: JudgeConfig
+    tags?: string[]
+    title?: string
+  }
+
+  type QuestionEditRequest = {
+    answer?: string
+    content?: string
+    id?: number
+    judgeCase?: JudgeCase[]
+    judgeConfig?: JudgeConfig
+    tags?: string[]
+    title?: string
+  }
+
+  type QuestionQueryRequest = {
+    answer?: string
+    content?: string
+    current?: number
+    id?: number
+    pageSize?: number
+    sortField?: string
+    sortOrder?: string
+    tags?: string[]
+    title?: string
+    userId?: number
+  }
+
+  type QuestionSubmitAddRequest = {
+    code?: string
+    language?: string
+    questionId?: number
+  }
+
+  type QuestionSubmitQueryRequest = {
+    current?: number
+    language?: string
+    pageSize?: number
+    questionId?: number
+    sortField?: string
+    sortOrder?: string
+    status?: number
+    userId?: number
+  }
+
+  type QuestionSubmitVO = {
+    code?: string
+    createTime?: string
+    current?: number
+    id?: number
+    judgeInfo?: JudgeInfo
+    language?: string
+    pageSize?: number
+    questionId?: number
+    questionVO?: QuestionVO
+    sortField?: string
+    sortOrder?: string
+    status?: number
+    updateTime?: string
+    userId?: number
+    userVO?: UserVO
+  }
+
+  type QuestionUpdateRequest = {
+    answer?: string
+    content?: string
+    id?: number
+    judgeCase?: JudgeCase[]
+    judgeConfig?: JudgeConfig
+    tags?: string[]
+    title?: string
+  }
+
+  type QuestionVO = {
+    acceptedNum?: number
+    answer?: string
+    content?: string
+    createTime?: string
+    favourNum?: number
+    id?: number
+    judgeConfig?: JudgeConfig
+    submitNum?: number
+    tags?: string[]
+    thumbNum?: number
+    title?: string
+    updateTime?: string
+    userId?: number
+    userVO?: UserVO
   }
 
   type uploadFileUsingPOSTParams = {

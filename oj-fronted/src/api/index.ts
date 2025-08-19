@@ -7,6 +7,8 @@ import * as fileController from './fileController'
 import * as postController from './postController'
 import * as postFavourController from './postFavourController'
 import * as postThumbController from './postThumbController'
+import * as questionController from './questionController'
+import * as questionSubmitController from './questionSubmitController'
 import * as userController from './userController'
 export default {
   wxMpController,
@@ -14,5 +16,7 @@ export default {
   postController,
   postFavourController,
   postThumbController,
+  questionController,
+  questionSubmitController,
   userController,
 }

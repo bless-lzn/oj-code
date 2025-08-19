@@ -7,10 +7,10 @@ export async function addPostUsingPost(body: API.PostAddRequest, options?: { [ke
   return request<API.BaseResponseLong_>('/api/post/add', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -22,10 +22,10 @@ export async function deletePostUsingPost(
   return request<API.BaseResponseBoolean_>('/api/post/delete', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -37,10 +37,10 @@ export async function editPostUsingPost(
   return request<API.BaseResponseBoolean_>('/api/post/edit', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -53,9 +53,9 @@ export async function getPostVoByIdUsingGet(
   return request<API.BaseResponsePostVO_>('/api/post/get/vo', {
     method: 'GET',
     params: {
-      ...params
+      ...params,
     },
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -67,10 +67,10 @@ export async function listPostByPageUsingPost(
   return request<API.BaseResponsePagePost_>('/api/post/list/page', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -82,10 +82,10 @@ export async function listPostVoByPageUsingPost(
   return request<API.BaseResponsePagePostVO_>('/api/post/list/page/vo', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -97,10 +97,10 @@ export async function listMyPostVoByPageUsingPost(
   return request<API.BaseResponsePagePostVO_>('/api/post/my/list/page/vo', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -112,10 +112,10 @@ export async function searchPostVoByPageUsingPost(
   return request<API.BaseResponsePagePostVO_>('/api/post/search/page/vo', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
 
@@ -127,9 +127,9 @@ export async function updatePostUsingPost(
   return request<API.BaseResponseBoolean_>('/api/post/update', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     data: body,
-    ...(options || {})
+    ...(options || {}),
   })
 }
