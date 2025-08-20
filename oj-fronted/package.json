@@ -20,6 +20,7 @@
     "@bytemd/plugin-highlight": "^1.22.0",
     "@bytemd/vue-next": "^1.22.0",
     "axios": "^1.11.0",
+    "monaco-editor": "^0.52.2",
     "pinia": "^3.0.3",
     "tslib": "^2.8.1",
     "vue": "^3.5.18",
