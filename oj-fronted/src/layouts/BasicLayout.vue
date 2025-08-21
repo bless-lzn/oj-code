@@ -5,7 +5,6 @@
         <GlobalHeader></GlobalHeader>
       </a-layout-header>
       <a-layout-content class="content">
-        Content
         <RouterView></RouterView>
       </a-layout-content>
       <a-layout-footer class="footer">Footer</a-layout-footer>
@@ -29,7 +28,7 @@ import GlobalHeader from '@/components/GlobalHeader.vue'
 
 #basicLayout .content {
   background: linear-gradient(to right, #efefef, #fff);
-  margin-bottom: 28px;
+  margin-bottom: 40px;
   padding: 20px;
 }
 

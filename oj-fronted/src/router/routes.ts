@@ -5,6 +5,8 @@ import ACCESS_ENUM from '@/access/accessEnum.ts'
 import UserLayout from '@/layouts/UserLayout.vue'
 import UserLoginView from '@/views/user/UserLoginView.vue'
 import UserRegisterView from '@/views/user/UserRegisterView.vue'
+import AddQuestionView from '@/views/question/AddQuestionView.vue'
+import ManageQuestionView from '@/views/question/ManageQuestionView.vue'
 
 export const routes = [
   {
@@ -28,9 +30,28 @@ export const routes = [
     ]
   },
   {
+    path: '/add/question',
+    name: '创建题目',
+    component: AddQuestionView,
+    // meta: {
+    //   access: ACCESS_ENUM.ADMIN
+    // }
+  },
+  {
     path: '/',
-    name: 'home',
+    name: '浏览题目',
     component: HomeView
+    // meta: {
+    //   access: ACCESS_ENUM.USER
+    // }
+  },
+  {
+    path: '/manage/question',
+    name: '管理题目',
+    component: ManageQuestionView
+    // meta: {
+    //   access: ACCESS_ENUM.USER
+    // }
   },
   {
     path: '/noAuth',
@@ -45,9 +66,9 @@ export const routes = [
     path: '/admin',
     name: 'admin',
     component: AdminView,
-    meta: {
-      access: ACCESS_ENUM.ADMIN
-    }
+    // meta: {
+    //   access: ACCESS_ENUM.ADMIN
+    // }
   },
   {
     path: '/about',
