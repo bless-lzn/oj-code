@@ -25,6 +25,8 @@ import {
   listQuestionByPageUsingPost
 } from '@/api/questionController.ts'
 import { Message } from '@arco-design/web-vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const show = ref(true)
 const columns = [{
@@ -99,9 +101,15 @@ onMounted(() => {
   getQuestionList()
   // console.log(dataList.value)
 })
-const handleUpdate = async (question: API.Question) => {
-  // await editQuestionUsingPost(question)
-  console.log(question)
+const handleUpdate =(question: API.Question) => {
+//发送请求到
+  router.push({
+    path: '/update/question',
+    query: {
+      id: question.id
+    }
+  })
+
 }
 
 const handleDelete = async (question: API.Question) => {

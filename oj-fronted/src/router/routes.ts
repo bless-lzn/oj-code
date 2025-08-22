@@ -32,7 +32,7 @@ export const routes = [
   {
     path: '/add/question',
     name: '创建题目',
-    component: AddQuestionView,
+    component: AddQuestionView
     // meta: {
     //   access: ACCESS_ENUM.ADMIN
     // }
@@ -54,6 +54,14 @@ export const routes = [
     // }
   },
   {
+    path: '/update/question',
+    name: '修改题目',
+    component: AddQuestionView
+    // meta: {
+    //   access: ACCESS_ENUM.USER
+    // }
+  },
+  {
     path: '/noAuth',
     name: 'auth',
     component: NoAuth,
@@ -65,7 +73,7 @@ export const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminView,
+    component: AdminView
     // meta: {
     //   access: ACCESS_ENUM.ADMIN
     // }
@@ -76,7 +84,7 @@ export const routes = [
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue'),
+    component: () => import('../views/AboutView.vue')
     // meta: {
     //   access: ACCESS_ENUM.USER
     // }

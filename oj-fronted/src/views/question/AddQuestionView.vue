@@ -98,18 +98,54 @@
 
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import MdEditor from '@/components/MdEditor.vue'
 import { Message } from '@arco-design/web-vue'
-import { addQuestionUsingPost } from '@/api/questionController.ts'
+import {
+  addQuestionUsingPost,
+  getQuestionByIdUsingGet,
+  getQuestionVoByIdUsingGet,
+  updateQuestionUsingPost
+} from '@/api/questionController.ts'
+import { useRoute } from 'vue-router'
+
+//对来的请求进行判断
+const route = useRoute()
+
+//如果包含update，则进行查询修改
+const updatePage = route.path.includes('update')
+//根据传进来的id获取老的数据
+const loadData = async () => {
+  const id = route.query.id
+  console.log(id)
+  if (!id) {
+    return
+  }
+  const res = await getQuestionVoByIdUsingGet(id as number)
+  if (res.data.code === 0 && res.data.data) {
+    if (!res.data.data.tags) {
+      res.data.data.tags = JSON.parse(res.data.data.tags as any)
+    }
+    Object.assign(form, res.data.data)
+
+  } else {
+    Message.error('获取数据失败')
+  }
+}
+onMounted(() => {
+  if (updatePage) {
+    loadData()
+  }
+})
+
 
 const form = reactive({
-  answer: '答案',
-  content: '题目内容',
+  answer: '',
+  content: '',
   judgeCase: [
     {
-      input: '1 2',
-      output: '3 4'
+      input: '',
+      output: ''
     }
   ],
   judgeConfig: {
@@ -120,15 +156,26 @@ const form = reactive({
   tags: ['栈', '简单'],
   title: 'A + B'
 })
-const doSubmit =async () =>  {
+const doSubmit = async () => {
   // console.log(form.content)
   // console.log(form.answer)
-  const res = await addQuestionUsingPost(form);
-  if (res.data.code === 0) {
-    Message.success("创建成功");
+
+  if (updatePage) {
+    const res = await updateQuestionUsingPost(form)
+    if (res.data.code === 0) {
+      Message.success('修改成功')
+    } else {
+      Message.error('修改失败' + res.data.message)
+    }
   } else {
-    Message.error("创建失败" + res.data.message);
+    const res = await addQuestionUsingPost(form)
+    if (res.data.code === 0) {
+      Message.success('创建成功')
+    } else {
+      Message.error('创建失败' + res.data.message)
+    }
   }
+
 }
 const handleAdd = () => {
   form.judgeCase.push({
