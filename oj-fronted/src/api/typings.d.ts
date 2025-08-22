@@ -450,7 +450,7 @@ declare namespace API {
     judgeConfig?: JudgeConfig
     submitNum?: number
     tags?: string[]
-    thumbNum?: number
+    thumbNum?: number//点赞数
     title?: string
     updateTime?: string
     userId?: number

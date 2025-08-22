@@ -121,17 +121,17 @@ const loadData = async () => {
     return
   }
   console.log(id)
-  const res = await getQuestionByIdUsingGet({id})
+  const res = await getQuestionByIdUsingGet({id}as any)
   console.log(res.data.data)
   if (res.data.code === 0 && res.data.data) {
     console.log(res.data.data.tags)
     Object.assign(form, res.data.data)
     if(form.tags)
-    form.tags=JSON.parse(res.data.data.tags)
+    form.tags=res?.data.data.tags?JSON.parse(res?.data.data.tags): []
     if(form.judgeCase)
-    form.judgeCase=JSON.parse(res.data.data.judgeCase)
+    form.judgeCase=res.data.data.judgeCase?JSON.parse(res.data.data.judgeCase):[]
     if(form.judgeConfig)
-    form.judgeConfig=JSON.parse(res.data.data.judgeConfig)
+    form.judgeConfig=res.data?.data?.judgeConfig?JSON.parse(res.data?.data?.judgeConfig):[]
   } else {
     Message.error('获取数据失败')
   }

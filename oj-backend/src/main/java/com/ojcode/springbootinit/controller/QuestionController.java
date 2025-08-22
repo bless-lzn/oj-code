@@ -155,8 +155,8 @@ public class QuestionController {
     }
 
     @GetMapping("/get")
-    public BaseResponse<Question> getQuestionById(long id, HttpServletRequest request) {
-        if (id <= 0) {
+    public BaseResponse<Question> getQuestionById( long id, HttpServletRequest request) {
+        if (id < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         //判断1权限
@@ -169,7 +169,6 @@ public class QuestionController {
         if (!user.getId().equals(question.getUserId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-
         return ResultUtils.success(question);
     }
 

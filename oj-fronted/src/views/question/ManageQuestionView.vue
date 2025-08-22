@@ -5,12 +5,27 @@
       showTotal: true,
       pageSize: searchParams.pageSize,
       total: total,
-      current:searchParams.current
-    }">
+      current:searchParams.current }"
+      @page-change="onPageChange">
       <template #optional="{ record }">
         <a-space>
           <a-button type="outline" @click="handleUpdate(record)">修改</a-button>
           <a-button status="danger" @click="handleDelete(record)">删除</a-button>
+        </a-space>
+      </template>
+      <template #tags="{ record }">
+        <a-space wrap>
+          <a-tag v-for="(tag, index) of record.tags" :key="index" color="green">{{ tag }}</a-tag>
+        </a-space>
+      </template>
+<!--      <template #judgeConfig="{ record }">-->
+<!--        <a-space wrap>-->
+<!--         {{JSON.parse(record.judgeConfig)}}-->
+<!--        </a-space>-->
+<!--      </template>-->
+      <template #judgeCase="{ record }">
+        <a-space wrap>
+         {{JSON.parse(record.judgeCase)}}
         </a-space>
       </template>
     </a-table>
@@ -18,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import {
   deleteQuestionUsingPost,
   editQuestionUsingPost,
@@ -26,6 +41,7 @@ import {
 } from '@/api/questionController.ts'
 import { Message } from '@arco-design/web-vue'
 import { useRouter } from 'vue-router'
+import dayjs from 'dayjs'
 const router = useRouter()
 
 const show = ref(true)
@@ -43,7 +59,7 @@ const columns = [{
   },
   {
     title: '标签',
-    dataIndex: 'tags'
+    slotName: 'tags'
   }, {
     title: '答案',
     dataIndex: 'answer'
@@ -58,7 +74,7 @@ const columns = [{
     dataIndex: 'judgeConfig'
   }, {
     title: '判题用例',
-    dataIndex: 'judgeCase'
+    slotName: 'judgeCase'
   }, {
     title: '用户id',
     dataIndex: 'userId'
@@ -70,28 +86,24 @@ const columns = [{
     title: 'Optional',
     slotName: 'optional'
   }]
-const data = [{
-  key: '1',
-  name: 'Jane Doe',
-  first: 'Jane',
-  last: 'Doe',
-  salary: 23000,
-  address: '32 Park Road, London',
-  email: 'jane.doe@example.com'
-}]
-
 //看接受到的数值
 const dataList = ref<API.Question []>([])
 const total = ref(0)
-const searchParams = ref({
+const searchParams = ref<API.QuestionQueryRequest>({
   current: 1,
-  pageSize: 10
+  pageSize: 2
 })
 const getQuestionList = async () => {
   const res = await listQuestionByPageUsingPost(searchParams.value)
   if (res.data.code === 0) {
     dataList.value = res.data?.data?.records ?? []
     total.value = res.data?.data?.total ?? 0
+    dataList.value.forEach(item => {
+      item.createTime = dayjs(item.createTime).format('YYYY-MM-DD HH:mm:ss')
+      if(item.tags)
+        item.tags=JSON.parse(item.tags)
+    })
+    console.log(dataList)
   } else {
     Message.error('获取数据失败，' + res.data.message)
   }
@@ -101,6 +113,17 @@ onMounted(() => {
   getQuestionList()
   // console.log(dataList.value)
 })
+const onPageChange=(page:number)=>{
+  searchParams.value={
+    ...searchParams.value,
+    current:page
+  }
+  // getQuestionList()
+}
+// watchEffect(()=>{
+//   console.log("你好")
+//   getQuestionList()
+// })
 const handleUpdate =(question: API.Question) => {
 //发送请求到
   router.push({

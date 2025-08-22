@@ -7,6 +7,7 @@ import UserLoginView from '@/views/user/UserLoginView.vue'
 import UserRegisterView from '@/views/user/UserRegisterView.vue'
 import AddQuestionView from '@/views/question/AddQuestionView.vue'
 import ManageQuestionView from '@/views/question/ManageQuestionView.vue'
+import QuestionsView from '@/views/question/QuestionsView.vue'
 
 export const routes = [
   {
@@ -30,21 +31,24 @@ export const routes = [
     ]
   },
   {
+    path: '/questions',
+    name: '浏览题目',
+    component: QuestionsView,
+  },
+  {
     path: '/add/question',
     name: '创建题目',
-    component: AddQuestionView
-    // meta: {
-    //   access: ACCESS_ENUM.ADMIN
-    // }
+    component: AddQuestionView,
+    meta: {
+      access: ACCESS_ENUM.ADMIN
+    }
   },
   {
     path: '/',
-    name: '浏览题目',
-    component: HomeView
-    // meta: {
-    //   access: ACCESS_ENUM.USER
-    // }
+    name: '主页',
+    component: QuestionsView,
   },
+
   {
     path: '/manage/question',
     name: '管理题目',
@@ -56,10 +60,10 @@ export const routes = [
   {
     path: '/update/question',
     name: '修改题目',
-    component: AddQuestionView
-    // meta: {
-    //   access: ACCESS_ENUM.USER
-    // }
+    component: AddQuestionView,
+    meta: {
+      hideInMenu: true
+    }
   },
   {
     path: '/noAuth',
@@ -76,17 +80,6 @@ export const routes = [
     component: AdminView
     // meta: {
     //   access: ACCESS_ENUM.ADMIN
-    // }
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue')
-    // meta: {
-    //   access: ACCESS_ENUM.USER
     // }
   }
 ]
