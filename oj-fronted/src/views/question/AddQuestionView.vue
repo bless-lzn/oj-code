@@ -117,17 +117,21 @@ const updatePage = route.path.includes('update')
 //根据传进来的id获取老的数据
 const loadData = async () => {
   const id = route.query.id
-  console.log(id)
   if (!id) {
     return
   }
-  const res = await getQuestionVoByIdUsingGet(id as number)
+  console.log(id)
+  const res = await getQuestionByIdUsingGet({id})
+  console.log(res.data.data)
   if (res.data.code === 0 && res.data.data) {
-    if (!res.data.data.tags) {
-      res.data.data.tags = JSON.parse(res.data.data.tags as any)
-    }
+    console.log(res.data.data.tags)
     Object.assign(form, res.data.data)
-
+    if(form.tags)
+    form.tags=JSON.parse(res.data.data.tags)
+    if(form.judgeCase)
+    form.judgeCase=JSON.parse(res.data.data.judgeCase)
+    if(form.judgeConfig)
+    form.judgeConfig=JSON.parse(res.data.data.judgeConfig)
   } else {
     Message.error('获取数据失败')
   }
