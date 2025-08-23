@@ -1,8 +1,9 @@
 <template>
   <div>
-    <!--    <CodeEditor :value="codeValue" :handle-change="onCodeChange"/>-->
-    <MdEditor :value="mdValue"  :handle-change="onMdChange" />
+        <CodeEditor :value="codeValue" :handle-change="onCodeChange"/>
+<!--    <MdEditor :value="mdValue"  :handle-change="onMdChange" />-->
     <!--    父组件可以进行传值-->
+
   </div>
 
 </template>
@@ -12,11 +13,11 @@ import MdEditor from '@/components/MdEditor.vue'
 import { ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 
-/*const codeValue = ref('')
+const codeValue = ref('')
 const onCodeChange = (v: string) => {
-  console.log(codeValue.value)
+  console.log("父组件监听到代码改变"+codeValue.value)
   codeValue.value = v
-}*/
+}
 const mdValue = ref('你好')
 const onMdChange = (v: string) => {
   console.log(mdValue)

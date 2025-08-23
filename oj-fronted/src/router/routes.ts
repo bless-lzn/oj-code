@@ -8,6 +8,7 @@ import UserRegisterView from '@/views/user/UserRegisterView.vue'
 import AddQuestionView from '@/views/question/AddQuestionView.vue'
 import ManageQuestionView from '@/views/question/ManageQuestionView.vue'
 import QuestionsView from '@/views/question/QuestionsView.vue'
+import ViewQuestionView from '@/views/question/ViewQuestionView.vue'
 
 export const routes = [
   {
@@ -58,6 +59,15 @@ export const routes = [
     // }
   },
   {
+    path: '/view/question/:id',
+    name: '在线做题',
+    props: true,
+    component: ViewQuestionView,
+    meta: {
+      access: ACCESS_ENUM.USER
+    }
+  },
+  {
     path: '/update/question',
     name: '修改题目',
     component: AddQuestionView,
@@ -77,7 +87,7 @@ export const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminView
+    component: HomeView
     // meta: {
     //   access: ACCESS_ENUM.ADMIN
     // }

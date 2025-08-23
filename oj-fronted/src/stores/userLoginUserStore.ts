@@ -15,6 +15,7 @@ export const UserLoginUserStore = defineStore('loginUser', () => {
     const res = await getLoginUserUsingGet()
     if (res.data.code === 0 && res.data.data) {
       loginUser.value = res.data.data
+      console.log('登录用户信息', loginUser.value)
     }
     // // 测试用户登录，3 秒后自动登录
     // setTimeout(() => {

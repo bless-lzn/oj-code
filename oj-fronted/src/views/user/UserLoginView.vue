@@ -40,11 +40,8 @@ const form = reactive({
   userPassword: '',
 })
 const handleSubmit = async (data: any) => {
-  console.log(data.values)
   const res = await userLoginUsingPost(data.values)
   if (res.data.code === 0 && res.data.data) {
-    // 登录成功保存登录态
-    console.log(res.data.data)
     await UserLoginUserStore().fetchLoginUser()
     Message.success('登录成功')
     await router.push({
