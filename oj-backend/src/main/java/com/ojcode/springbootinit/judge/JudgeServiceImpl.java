@@ -9,6 +9,9 @@ import com.ojcode.springbootinit.judge.codesandbox.CodeSandboxProxy;
 import com.ojcode.springbootinit.judge.codesandbox.model.CodeSandboxEnum;
 import com.ojcode.springbootinit.judge.codesandbox.model.ExecuteCodeRequest;
 import com.ojcode.springbootinit.judge.codesandbox.model.ExecuteCodeResponse;
+import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeContext;
+import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeStrategy;
+import com.ojcode.springbootinit.judge.codesandbox.strategy.defaultJudgeStrategyImpl;
 import com.ojcode.springbootinit.model.dto.question.JudgeCase;
 import com.ojcode.springbootinit.model.dto.question.JudgeConfig;
 import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
@@ -85,35 +88,27 @@ public class JudgeServiceImpl implements JudgeService {
                 .build();
         ExecuteCodeResponse executeCodeResponse = codeSandbox.executeCode(executeCodeRequest);
         //5）根据沙箱的执行结果，设置题目的判题状态和信息
-
-        String message = executeCodeResponse.getMessage();
-        Integer status = executeCodeResponse.getStatus();
         List<String> outputList = executeCodeResponse.getOutputList();
-        JudgeInfoMessageEnum judgeInfoMessageEnum = JudgeInfoMessageEnum.WAITING;
         JudgeInfo judgeInfo = executeCodeResponse.getJudgeInfo();
-        if(outputList.size()!= inputList.size()){
-            judgeInfoMessageEnum=JudgeInfoMessageEnum.WRONG_ANSWER;
-            return null;
-        }
-        //判断执行结果
-        for (int i = 0; i < judgeCaseList.size(); i++) {
-            if(!judgeCaseList.get(i).getOutput().equals(outputList.get(i))){
-                judgeInfoMessageEnum=JudgeInfoMessageEnum.WRONG_ANSWER;
-               return null;
-            }
-        }
-        //判断题目的限制是否符合
-        JudgeConfig judgeConfig = JSONUtil.toBean(question.getJudgeConfig(), JudgeConfig.class);
-        Long needMemory = judgeInfo.getMemory();
-        Long needTime = judgeInfo.getTime();
-        if (needMemory > judgeConfig.getMemoryLimit()) {
-            judgeInfoMessageEnum = JudgeInfoMessageEnum.MEMORY_LIMIT_EXCEEDED;
-            return null;
-        }
-        if (needTime > judgeConfig.getTimeLimit()) {
-            judgeInfoMessageEnum = JudgeInfoMessageEnum.TIME_LIMIT_EXCEEDED;
-            return null;
-        }
-        return null;
+        JudgeContext judgeContext = new JudgeContext();
+        judgeContext.setJudgeInfo(judgeInfo);
+        judgeContext.setInputList(inputList);
+        judgeContext.setOutputList(outputList);
+        judgeContext.setJudgeCaseList(judgeCaseList);
+        judgeContext.setQuestion(question);
+        judgeContext.setQuestionSubmit(questionSubmit);
+        JudgeStrategy judgeStrategy = new defaultJudgeStrategyImpl();
+        judgeInfo = judgeStrategy.doJudge(judgeContext);
+//修改数据库中的判题结果
+        questionSubmitUpdate.setId(questionSubmit.getId());
+        questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
+        questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
+         result = questionSubmitService.updateById(questionSubmitUpdate);
+         if(!result){
+             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
+         }
+        QuestionSubmit questionSubmitResult  = questionSubmitService.getById(questionSubmitId);
+        return QuestionSubmitVO.objToVo(questionSubmitResult);
+
     }
 }
