@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { getQuestionVoByIdUsingGet, listQuestionVoByPageUsingPost } from '@/api/questionController.ts'
 import { Message } from '@arco-design/web-vue'
 import MdEditor from '@/components/MdEditor.vue'
@@ -84,6 +84,9 @@ const form = ref<API.QuestionSubmitAddRequest>({
   language: 'java',
   code: '',
   questionId: props.id as any
+})
+watch((form.value), () => {
+  console.log("form.value"+form.value.code)
 })
 
 const handleSubmit = async () => {
