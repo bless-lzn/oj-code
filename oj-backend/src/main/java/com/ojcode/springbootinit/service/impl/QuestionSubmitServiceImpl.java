@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ojcode.springbootinit.common.ErrorCode;
 import com.ojcode.springbootinit.constant.CommonConstant;
 import com.ojcode.springbootinit.exception.BusinessException;
+import com.ojcode.springbootinit.judge.JudgeService;
 import com.ojcode.springbootinit.mapper.QuestionSubmitMapper;
 import com.ojcode.springbootinit.model.dto.question.QuestionQueryRequest;
 import com.ojcode.springbootinit.model.dto.questionSubmit.QuestionSubmitAddRequest;
@@ -27,6 +28,7 @@ import com.ojcode.springbootinit.utils.SqlUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +48,9 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     private QuestionService questionService;
     @Resource
     private UserService userService;
+    @Resource
+    @Lazy
+    private JudgeService judgeService;
 
     /**
      * 提交题目
@@ -75,13 +81,16 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         questionSubmit.setLanguage(questionSubmitAddRequest.getLanguage());
         //todo 设置初始状态
         questionSubmit.setStatus(QuestionSubmitStatusEnum.WAITING.getValue());
+
         questionSubmit.setJudgeInfo("{}");
         boolean save = this.save(questionSubmit);
         if (!save) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目提交失败");
         }
-        return questionSubmit.getId();
 
+            judgeService.doJudge(questionSubmit.getId());
+
+        return questionSubmit.getId();
     }
 
     @Override

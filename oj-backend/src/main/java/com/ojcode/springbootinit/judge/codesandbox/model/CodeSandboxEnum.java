@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public enum CodeSandboxEnum {
 
-    ExampleCodeSandboxEnum("示例代码沙箱", "ExampleCodeSandbox"),
-    RemoteCodeSandboxEnum("远程代码沙箱", "RemoteCodeSandbox"),
+    ExampleCodeSandboxEnum("示例代码沙箱", "example"),
+    RemoteCodeSandboxEnum("远程代码沙箱", "remote"),
 
-    ThirdPartyCodeSandboxEnum("第三方代码沙箱", "ThirdPartyCodeSandbox"),
+    ThirdPartyCodeSandboxEnum("第三方代码沙箱", "third"),
     ;
     private final String text;
 

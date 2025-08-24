@@ -10,29 +10,26 @@ import com.ojcode.springbootinit.judge.codesandbox.model.CodeSandboxEnum;
 import com.ojcode.springbootinit.judge.codesandbox.model.ExecuteCodeRequest;
 import com.ojcode.springbootinit.judge.codesandbox.model.ExecuteCodeResponse;
 import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeContext;
+import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeManager;
 import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeStrategy;
-import com.ojcode.springbootinit.judge.codesandbox.strategy.defaultJudgeStrategyImpl;
+import com.ojcode.springbootinit.judge.codesandbox.strategy.DefaultJudgeStrategyImpl;
 import com.ojcode.springbootinit.model.dto.question.JudgeCase;
-import com.ojcode.springbootinit.model.dto.question.JudgeConfig;
 import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
 import com.ojcode.springbootinit.model.entity.Question;
 import com.ojcode.springbootinit.model.entity.QuestionSubmit;
-import com.ojcode.springbootinit.model.enums.JudgeInfoMessageEnum;
-import com.ojcode.springbootinit.model.enums.QuestionSubmitLanguageEnum;
 import com.ojcode.springbootinit.model.enums.QuestionSubmitStatusEnum;
-import com.ojcode.springbootinit.model.vo.QuestionSubmitVO;
 import com.ojcode.springbootinit.service.QuestionService;
 import com.ojcode.springbootinit.service.QuestionSubmitService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class JudgeServiceImpl implements JudgeService {
     @Value("${codeSandbox.type:example}")
     private String type;
@@ -40,9 +37,10 @@ public class JudgeServiceImpl implements JudgeService {
     private QuestionService questionsService;
     @Resource
     private QuestionSubmitService questionSubmitService;
-
+    @Resource
+    private JudgeManager judgeManager;
     @Override
-    public QuestionSubmitVO doJudge(Long questionSubmitId) {
+    public QuestionSubmit doJudge(Long questionSubmitId) {
         //1）传入题目的提交 id，获取到对应的题目、提交信息（包含代码、编程语言等）
         QuestionSubmit questionSubmit = questionSubmitService.getById(questionSubmitId);
         if (questionSubmit == null) {
@@ -73,8 +71,8 @@ public class JudgeServiceImpl implements JudgeService {
         }
         CodeSandBox codeSandbox = CodeSandboxFactory.newInstance(enumByValue);
         codeSandbox = new CodeSandboxProxy(codeSandbox);
-        String code = questionSubmitUpdate.getCode();
-        String language = questionSubmitUpdate.getLanguage();
+        String code = questionSubmit.getCode();
+        String language = questionSubmit.getLanguage();
         //获得输入样例
         String judgeCase = question.getJudgeCase();
         //装换为数组
@@ -97,18 +95,21 @@ public class JudgeServiceImpl implements JudgeService {
         judgeContext.setJudgeCaseList(judgeCaseList);
         judgeContext.setQuestion(question);
         judgeContext.setQuestionSubmit(questionSubmit);
-        JudgeStrategy judgeStrategy = new defaultJudgeStrategyImpl();
+        JudgeStrategy judgeStrategy = new DefaultJudgeStrategyImpl();
+
         judgeInfo = judgeStrategy.doJudge(judgeContext);
+//        JudgeInfo judgeInfo = judgeManager.doJudge(judgeContext);
+        log.info("judgeIfo________{}", judgeInfo);
 //修改数据库中的判题结果
         questionSubmitUpdate.setId(questionSubmit.getId());
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
+        log.info("judgeIfo________{}", judgeInfo);
          result = questionSubmitService.updateById(questionSubmitUpdate);
          if(!result){
              throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
          }
-        QuestionSubmit questionSubmitResult  = questionSubmitService.getById(questionSubmitId);
-        return QuestionSubmitVO.objToVo(questionSubmitResult);
 
+        return   questionSubmitService.getById(questionSubmitId);
     }
 }

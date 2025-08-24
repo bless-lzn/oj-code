@@ -8,7 +8,7 @@ import com.ojcode.springbootinit.model.enums.JudgeInfoMessageEnum;
 
 import java.util.List;
 
-public class defaultJudgeStrategyImpl implements JudgeStrategy {
+public class JavaJudgeStrategyImpl implements JudgeStrategy {
     @Override
     public JudgeInfo doJudge(JudgeContext judgeContext) {
         List<String> outputList = judgeContext.getOutputList();
