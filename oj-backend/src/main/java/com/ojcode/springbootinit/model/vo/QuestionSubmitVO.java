@@ -2,16 +2,13 @@ package com.ojcode.springbootinit.model.vo;
 
 import cn.hutool.json.JSONUtil;
 import com.ojcode.springbootinit.common.PageRequest;
-import com.ojcode.springbootinit.model.dto.question.JudgeConfig;
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
-import com.ojcode.springbootinit.model.entity.Question;
+import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 import com.ojcode.springbootinit.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class QuestionSubmitVO extends PageRequest implements Serializable {

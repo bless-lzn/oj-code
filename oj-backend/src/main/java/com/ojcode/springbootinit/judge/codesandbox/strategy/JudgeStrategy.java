@@ -1,6 +1,6 @@
 package com.ojcode.springbootinit.judge.codesandbox.strategy;
 
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
+import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 
 /**
  * @description: 策略模式

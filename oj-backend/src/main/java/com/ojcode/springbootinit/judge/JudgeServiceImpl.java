@@ -14,7 +14,7 @@ import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeManager;
 import com.ojcode.springbootinit.judge.codesandbox.strategy.JudgeStrategy;
 import com.ojcode.springbootinit.judge.codesandbox.strategy.DefaultJudgeStrategyImpl;
 import com.ojcode.springbootinit.model.dto.question.JudgeCase;
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
+import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 import com.ojcode.springbootinit.model.entity.Question;
 import com.ojcode.springbootinit.model.entity.QuestionSubmit;
 import com.ojcode.springbootinit.model.enums.QuestionSubmitStatusEnum;
@@ -99,12 +99,10 @@ public class JudgeServiceImpl implements JudgeService {
 
         judgeInfo = judgeStrategy.doJudge(judgeContext);
 //        JudgeInfo judgeInfo = judgeManager.doJudge(judgeContext);
-        log.info("judgeIfo________{}", judgeInfo);
 //修改数据库中的判题结果
         questionSubmitUpdate.setId(questionSubmit.getId());
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
-        log.info("judgeIfo________{}", judgeInfo);
          result = questionSubmitService.updateById(questionSubmitUpdate);
          if(!result){
              throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");

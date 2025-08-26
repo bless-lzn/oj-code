@@ -3,7 +3,7 @@ package com.ojcode.springbootinit.judge.codesandbox.impl;
 import com.ojcode.springbootinit.judge.codesandbox.CodeSandBox;
 import com.ojcode.springbootinit.judge.codesandbox.model.ExecuteCodeRequest;
 import com.ojcode.springbootinit.judge.codesandbox.model.ExecuteCodeResponse;
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
+import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 import com.ojcode.springbootinit.model.enums.JudgeInfoMessageEnum;
 import com.ojcode.springbootinit.model.enums.QuestionSubmitStatusEnum;
 import lombok.extern.slf4j.Slf4j;

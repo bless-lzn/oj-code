@@ -1,7 +1,7 @@
 package com.ojcode.springbootinit.judge.codesandbox.strategy;
 
 import com.ojcode.springbootinit.model.dto.question.JudgeCase;
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
+import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 import com.ojcode.springbootinit.model.entity.Question;
 import com.ojcode.springbootinit.model.entity.QuestionSubmit;
 import lombok.Data;

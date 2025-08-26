@@ -3,7 +3,7 @@ package com.ojcode.springbootinit.judge.codesandbox.strategy;
 import cn.hutool.json.JSONUtil;
 import com.ojcode.springbootinit.model.dto.question.JudgeCase;
 import com.ojcode.springbootinit.model.dto.question.JudgeConfig;
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
+import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 import com.ojcode.springbootinit.model.enums.JudgeInfoMessageEnum;
 
 import java.util.List;

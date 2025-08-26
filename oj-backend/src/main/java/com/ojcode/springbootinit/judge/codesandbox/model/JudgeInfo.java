@@ -1,4 +1,4 @@
-package com.ojcode.springbootinit.model.dto.questionSubmit;
+package com.ojcode.springbootinit.judge.codesandbox.model;
 
 import lombok.Data;
 

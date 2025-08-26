@@ -86,7 +86,7 @@ const form = ref<API.QuestionSubmitAddRequest>({
   questionId: props.id as any
 })
 watch((form.value), () => {
-  console.log("form.value"+form.value.code)
+  console.log("form.value"+form.value.language)
 })
 
 const handleSubmit = async () => {
@@ -101,7 +101,9 @@ const handleSubmit = async () => {
 }
 const onCodeChange = (v: string) => {
   console.log('父组件----------'+form.value.code)
+
   form.value.code = v
+  // form.value.language
 }
 onMounted(() => {
   loadData()

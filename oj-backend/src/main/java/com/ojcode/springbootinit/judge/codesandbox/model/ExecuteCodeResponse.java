@@ -1,6 +1,5 @@
 package com.ojcode.springbootinit.judge.codesandbox.model;
 
-import com.ojcode.springbootinit.model.dto.questionSubmit.JudgeInfo;
 import lombok.Data;
 
 import java.util.List;
