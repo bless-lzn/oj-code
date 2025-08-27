@@ -7,6 +7,7 @@ import com.ojcode.springbootinit.judge.codesandbox.model.JudgeInfo;
 import com.ojcode.springbootinit.model.enums.JudgeInfoMessageEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DefaultJudgeStrategyImpl implements JudgeStrategy {
     @Override
@@ -29,8 +30,8 @@ public class DefaultJudgeStrategyImpl implements JudgeStrategy {
         }
         //判断题目的限制是否符合
         JudgeConfig judgeConfig = JSONUtil.toBean(judgeContext.getQuestion().getJudgeConfig(), JudgeConfig.class);
-        Long needMemory = judgeInfo.getMemory();
-        Long needTime = judgeInfo.getTime();
+        Long needMemory = Optional.ofNullable(judgeInfo.getMemory()).orElse(0L);
+        Long needTime = Optional.ofNullable(judgeInfo.getTime()).orElse(0L);
         if (needMemory > judgeConfig.getMemoryLimit()) {
             judgeInfoMessageEnum = JudgeInfoMessageEnum.MEMORY_LIMIT_EXCEEDED;
             return null;

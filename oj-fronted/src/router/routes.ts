@@ -9,6 +9,7 @@ import AddQuestionView from '@/views/question/AddQuestionView.vue'
 import ManageQuestionView from '@/views/question/ManageQuestionView.vue'
 import QuestionsView from '@/views/question/QuestionsView.vue'
 import ViewQuestionView from '@/views/question/ViewQuestionView.vue'
+import QuestionsSubmitView from '@/views/question/QuestionsSubmitView.vue'
 
 export const routes = [
   {
@@ -57,6 +58,11 @@ export const routes = [
     // meta: {
     //   access: ACCESS_ENUM.USER
     // }
+  },
+  {
+    path: '/question/submitVOList',
+    name: '提交列表页面',
+    component: QuestionsSubmitView,
   },
   {
     path: '/view/question/:id',
