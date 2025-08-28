@@ -16,8 +16,7 @@
         </a-form-item>
 
       </a-form>
-
-    <a-divider size="0"></a-divider>
+    <a-divider size=0></a-divider>
     <a-table :columns="columns" :data="dataList"
              :pagination="{
       showTotal: true,
@@ -97,7 +96,7 @@ const columns = [
 ]
 //看接受到的数值
 const dataList = ref<API.QuestionSubmitVO[]>([])
-const total = ref(0)
+const total = ref(0 as number)
 const searchParams = ref<API.QuestionSubmitQueryRequest>({
   language: undefined,
   questionId: undefined,
@@ -118,7 +117,7 @@ const getQuestionList = async () => {
   )
   if (res.data.code === 0) {
     dataList.value = res.data?.data?.records ?? []
-    total.value = res.data?.data?.total ?? 0
+    total.value =  Number(res.data?.data?.total) || 0
   } else {
     Message.error('获取数据失败，' + res.data.message)
   }

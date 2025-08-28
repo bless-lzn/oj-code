@@ -46,7 +46,7 @@
         </a-form>
 
         <CodeEditor :value="form.code" :language="form.language" :handleChange="onCodeChange"></CodeEditor>
-        <a-divider size="0"></a-divider>
+        <a-divider size=0></a-divider>
         <a-button type="primary" style="min-width: 100px" @click="handleSubmit">提交代码</a-button>
       </a-col>
     </a-row>
