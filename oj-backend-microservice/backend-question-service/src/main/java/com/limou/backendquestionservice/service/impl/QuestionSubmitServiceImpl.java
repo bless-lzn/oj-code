@@ -16,8 +16,8 @@ import com.limou.backendmodel.model.vo.QuestionSubmitVO;
 import com.limou.backendquestionservice.mapper.QuestionSubmitMapper;
 import com.limou.backendquestionservice.service.QuestionService;
 import com.limou.backendquestionservice.service.QuestionSubmitService;
-import com.limou.backendserviceclient.service.JudgeService;
-import com.limou.backendserviceclient.service.UserService;
+import com.limou.backendserviceclient.service.JudgeFeignClient;
+import com.limou.backendserviceclient.service.UserFeignClient;
 import com.limou.libackendcommon.common.ErrorCode;
 import com.limou.libackendcommon.constant.CommonConstant;
 import com.limou.libackendcommon.exception.BusinessException;
@@ -37,10 +37,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     private QuestionService questionService;
     @Resource
-    private UserService userService;
+    private UserFeignClient userFeignClient;
     @Resource
     @Lazy
-    private JudgeService judgeService;
+    private JudgeFeignClient judgeFeignClient;
 
     /**
      * 提交题目
@@ -78,7 +78,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目提交失败");
         }
 
-            judgeService.doJudge(questionSubmit.getId());
+            judgeFeignClient.doJudge(questionSubmit.getId());
 
         return questionSubmit.getId();
     }
@@ -109,7 +109,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     public QuestionSubmitVO getQuestionSubmitVO(QuestionSubmit questionSubmit, User user) {
         QuestionSubmitVO questionSubmitVO = QuestionSubmitVO.objToVo(questionSubmit);
         //本人和管理员可以查看所有提交
-        if (user.getId() != questionSubmit.getUserId() && !userService.isAdmin(user)) {
+        if (user.getId() != questionSubmit.getUserId() && !userFeignClient.isAdmin(user)) {
             questionSubmitVO.setCode(null);
         }
 

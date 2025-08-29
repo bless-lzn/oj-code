@@ -2,6 +2,10 @@
 spring:
   application:
     name: backend-question-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.249.136:8848
   # 默认 dev 环境
   profiles:
     active: dev
@@ -39,11 +43,12 @@ server:
   address: 0.0.0.0
   port: 8103
   servlet:
-    context-path: /api
+    context-path: /api/question
     # cookie 30 天过期
     session:
       cookie:
         max-age: 2592000
+        path: /api
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -63,4 +68,4 @@ knife4j:
       default:
         api-rule: package
         api-rule-resources:
-          - com.ojcode.springbootinit.controller
+          - com.limou.backendquestionservice.controller

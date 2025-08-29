@@ -1,0 +1,59 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.249.136:8848
+    gateway:
+      routes:
+      - id: backend-user-service
+        uri: lb://backend-user-service
+        predicates:
+          - Path=/api/user/**
+      - id: backend-judge-service
+        uri: lb://backend-judge-service
+        predicates:
+          - Path=/api/judge/**
+      - id: backend-question-service
+        uri: lb://backend-question-service
+        predicates:
+          - Path=/api/question/**,/api/question_submit/**
+  application:
+    name: backend-gateway
+  main:
+    web-application-type: reactive
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/codeoj
+    username: root
+    password: LZNlzn123.
+  # Redis 配置
+  # todo 需替换配置，然后取消注释
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+server:
+  port: 8101
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+knife4j:
+  gateway:
+    # ① 第一个配置，开启gateway聚合组件
+    enabled: true
+    # ② 第二行配置，设置聚合模式采用discover服务发现的模式
+    strategy: discover
+    discover:
+      # ③ 第三行配置，开启discover模式
+      enabled: true
+      # ④ 第四行配置，聚合子服务全部为Swagger2规范的文档
+      version: swagger2
+

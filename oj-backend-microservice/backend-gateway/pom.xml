@@ -19,15 +19,31 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
-        </dependency>
         <!--        client包-->
         <dependency>
             <groupId>com.limou</groupId>
             <artifactId>backend-service-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+<!--      https://doc.xiaominfo.com/docs/quick-start  -->
+        <!-- https://doc.xiaominfo.com/docs/quick-start#openapi2 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
+        <!--网关-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <version>3.1.4</version>
+        </dependency>
+
+        <!--nacos 服务注册发现-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>

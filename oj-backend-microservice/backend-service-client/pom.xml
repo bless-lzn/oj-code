@@ -36,19 +36,13 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-mp-spring-boot-starter -->
+        <!--nacos 服务注册发现-->
         <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>wx-java-mp-spring-boot-starter</artifactId>
-            <version>4.4.0</version>
-        </dependency>
-
-<!--        openfeign依赖-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

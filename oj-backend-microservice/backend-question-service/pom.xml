@@ -30,7 +30,17 @@
             <artifactId>backend-service-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <!--      https://doc.xiaominfo.com/docs/quick-start  -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <!--nacos 服务注册发现-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
             <groupId>com.baomidou</groupId>

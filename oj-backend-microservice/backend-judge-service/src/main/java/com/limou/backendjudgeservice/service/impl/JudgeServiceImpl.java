@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.limou.backendjudgeservice.service.CodeSandBox;
 import com.limou.backendjudgeservice.service.CodeSandboxFactory;
 import com.limou.backendjudgeservice.service.CodeSandboxProxy;
+import com.limou.backendjudgeservice.service.JudgeService;
 import com.limou.backendjudgeservice.service.strategy.DefaultJudgeStrategyImpl;
 import com.limou.backendjudgeservice.service.strategy.JudgeContext;
 import com.limou.backendjudgeservice.service.strategy.JudgeManager;
@@ -17,9 +18,9 @@ import com.limou.backendmodel.model.dto.question.JudgeCase;
 import com.limou.backendmodel.model.entity.Question;
 import com.limou.backendmodel.model.entity.QuestionSubmit;
 import com.limou.backendmodel.model.enums.QuestionSubmitStatusEnum;
-import com.limou.backendserviceclient.service.JudgeService;
-import com.limou.backendserviceclient.service.QuestionService;
-import com.limou.backendserviceclient.service.QuestionSubmitService;
+import com.limou.backendserviceclient.service.JudgeFeignClient;
+import com.limou.backendserviceclient.service.QuestionFeignClient;
+import com.limou.backendserviceclient.service.QuestionSubmitFeignClient;
 import com.limou.libackendcommon.common.ErrorCode;
 import com.limou.libackendcommon.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
@@ -36,20 +37,18 @@ public class JudgeServiceImpl implements JudgeService {
     @Value("${codeSandbox.type:example}")
     private String type;
     @Resource
-    private QuestionService questionsService;
+    private QuestionFeignClient questionFeignClient;
     @Resource
-    private QuestionSubmitService questionSubmitService;
-    @Resource
-    private JudgeManager judgeManager;
+    private QuestionSubmitFeignClient questionSubmitFeignClient;
     @Override
     public QuestionSubmit doJudge(Long questionSubmitId) {
         //1）传入题目的提交 id，获取到对应的题目、提交信息（包含代码、编程语言等）
-        QuestionSubmit questionSubmit = questionSubmitService.getById(questionSubmitId);
+        QuestionSubmit questionSubmit = questionSubmitFeignClient.getQuestionSubmit(questionSubmitId);
         if (questionSubmit == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         Long questionId = questionSubmit.getQuestionId();
-        Question question = questionsService.getById(questionId);
+        Question question = questionFeignClient.getQuestion(questionId);
         if (question == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
@@ -62,7 +61,7 @@ public class JudgeServiceImpl implements JudgeService {
         QuestionSubmit questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(questionSubmit.getId());
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.RUNNING.getValue());
-        boolean result = questionSubmitService.updateById(questionSubmitUpdate);
+        boolean result = questionSubmitFeignClient.updateQuestionSubmit(questionSubmitUpdate);
         if (!result) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
         }
@@ -105,11 +104,11 @@ public class JudgeServiceImpl implements JudgeService {
         questionSubmitUpdate.setId(questionSubmit.getId());
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
-         result = questionSubmitService.updateById(questionSubmitUpdate);
+         result = questionSubmitFeignClient.updateQuestionSubmit(questionSubmitUpdate);
          if(!result){
              throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
          }
 
-        return   questionSubmitService.getById(questionSubmitId);
+        return   questionSubmitFeignClient.getQuestionSubmit(questionSubmitId);
     }
 }
