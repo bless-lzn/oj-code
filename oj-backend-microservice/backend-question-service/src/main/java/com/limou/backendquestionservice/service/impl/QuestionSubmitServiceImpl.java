@@ -14,6 +14,7 @@ import com.limou.backendmodel.model.enums.QuestionSubmitLanguageEnum;
 import com.limou.backendmodel.model.enums.QuestionSubmitStatusEnum;
 import com.limou.backendmodel.model.vo.QuestionSubmitVO;
 import com.limou.backendquestionservice.mapper.QuestionSubmitMapper;
+import com.limou.backendquestionservice.rabbitMq.MyMessageProducer;
 import com.limou.backendquestionservice.service.QuestionService;
 import com.limou.backendquestionservice.service.QuestionSubmitService;
 import com.limou.backendserviceclient.service.JudgeFeignClient;
@@ -41,6 +42,8 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     @Lazy
     private JudgeFeignClient judgeFeignClient;
+    @Resource
+    private MyMessageProducer myMessageProducer;
 
     /**
      * 提交题目
@@ -77,8 +80,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         if (!save) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目提交失败");
         }
+//        myMessageProducer.sendMessage("code_exchange","my_routerKey",);
 
-            judgeFeignClient.doJudge(questionSubmit.getId());
+        myMessageProducer.sendMessage("code_exchange", "my_routingKey", String.valueOf(questionSubmit.getId()));
+        //        judgeFeignClient.doJudge(questionSubmit.getId());
 
         return questionSubmit.getId();
     }

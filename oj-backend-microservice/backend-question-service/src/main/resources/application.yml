@@ -6,6 +6,11 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.249.136:8848
+  rabbitmq:
+    host: 192.168.249.136
+    port: 5672
+    password: guest
+    username: guest
   # 默认 dev 环境
   profiles:
     active: dev
@@ -49,6 +54,9 @@ server:
       cookie:
         max-age: 2592000
         path: /api
+
+
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

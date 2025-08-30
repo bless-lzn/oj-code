@@ -36,7 +36,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 5000
-
+  rabbitmq:
+    host: 192.168.249.136
+    port: 5672
+    password: guest
+    username: guest
   servlet:
     multipart:
       # 大小限制

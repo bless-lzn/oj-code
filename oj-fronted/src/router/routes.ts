@@ -89,13 +89,5 @@ export const routes = [
       hideInMenu: true
     }
 
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    component: HomeView
-    // meta: {
-    //   access: ACCESS_ENUM.ADMIN
-    // }
   }
 ]
